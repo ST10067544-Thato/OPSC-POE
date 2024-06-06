@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.isaiahvonrundstedt.fokus">
+
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.VIEW"/>
+            <category android:name="android.intent.category.BROWSABLE" />
+            <data android:scheme="content"/>
+        </intent>
+
+        <intent>
+            <action android:name="android.intent.action.VIEW"/>
+            <category android:name="android.intent.category.BROWSABLE"/>
+            <data android:scheme="http"/>
+        </intent>
+
+        <intent>
+            <action android:name="android.intent.action.VIEW"/>
+            <category android:name="android.intent.category.BROWSABLE"/>
+            <data android:scheme="https"/>
+        </intent>
+    </queries>
+
+    <application
+        android:name=".Fokus"
+        android:allowBackup="false"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/Fokus.Theme.Core">
+
+        <provider
+            android:name="androidx.startup.InitializationProvider"
+            android:authorities="${applicationId}.androidx-startup"
+            android:exported="false"
+            tools:node="merge">
+            <!-- If you are using androidx.startup to initialize other components -->
+            <meta-data
+                android:name="androidx.work.WorkManagerInitializer"
+                android:value="androidx.startup"
+                tools:node="remove" />
+        </provider>
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.isaiahvonrundstedt.fokus.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/xml_provider_paths"/>
+        </provider>
+
+        <activity android:name=".features.core.activities.MainActivity"
+            android:exported="true"
+            android:theme="@style/Fokus.Theme.Core.Navigation" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+            <meta-data android:name="android.app.shortcuts"
+                android:resource="@xml/xml_launcher_shortcuts"/>
+        </activity>
+        <activity android:name=".features.attachments.attach.AttachToTaskActivity"
+            android:exported="true">
+            <intent-filter android:label="@string/sharing_attach_to_task">
+                <action android:name="android.intent.action.SEND"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data android:mimeType="text/plain"/>
+            </intent-filter>
+        </activity>
+        <activity android:name=".features.subject.editor.SubjectEditorContainer" />
+        <activity android:name=".features.task.editor.TaskEditorContainer"/>
+        <activity android:name=".features.event.editor.EventEditorContainer"/>
+
+        <service android:name=".components.service.NotificationActionService"
+            android:exported="false"/>
+        <service android:name=".components.service.BackupRestoreService"
+            android:exported="false"/>
+        <service android:name=".components.service.FileImporterService"
+            android:exported="false"/>
+        <service android:name=".components.service.DataExporterService"
+            android:exported="false"/>
+        <service android:name=".components.service.DataImporterService"
+            android:exported="false"/>
+        <service android:name=".features.task.widget.TaskWidgetService"
+            android:exported="false"
+            android:permission="android.permission.BIND_REMOTEVIEWS"/>
+        <service android:name="com.isaiahvonrundstedt.fokus.features.event.widget.EventWidgetService"
+            android:exported="false"
+            android:permission="android.permission.BIND_REMOTEVIEWS"/>
+        <service android:name="com.isaiahvonrundstedt.fokus.features.subject.widget.SubjectWidgetService"
+            android:exported="false"
+            android:permission="android.permission.BIND_REMOTEVIEWS"/>
+
+        <receiver android:name=".components.receiver.LocalizationReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.LOCALE_CHANGED"/>
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name="com.isaiahvonrundstedt.fokus.features.task.widget.TaskWidgetProvider"
+            android:label="@string/widget_task_name"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/xml_widget_tasks"/>
+        </receiver>
+        <receiver
+            android:name="com.isaiahvonrundstedt.fokus.features.event.widget.EventWidgetProvider"
+            android:label="@string/widget_event_name"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/xml_widget_events"/>
+        </receiver>
+        <receiver
+            android:name="com.isaiahvonrundstedt.fokus.features.subject.widget.SubjectWidgetProvider"
+            android:label="@string/widget_class_name"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/xml_widget_subjects"/>
+        </receiver>
+
+    </application>
+</manifest>

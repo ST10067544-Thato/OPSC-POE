@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Widget -->
+    <dimen name="widget_title">20sp</dimen>
+    <dimen name="widget_title_padding">16sp</dimen>
+    <dimen name="widget_item_text_title">18sp</dimen>
+    <dimen name="widget_item_tag_padding_end">16dp</dimen>
+    <dimen name="widget_empty_text_padding">16dp</dimen>
+
+</resources>

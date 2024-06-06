@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true">
+
+    <include
+        android:id="@+id/appBarLayout"
+        layout="@layout/layout_appbar_editor"/>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/contentView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/activity_padding"
+            android:animateLayoutChanges="true">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/eventNameTextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/activity_padding"
+                android:hint="@string/field_event_name"
+                app:errorEnabled="true"
+                style="@style/Fokus.Widget.TextInput.Layout">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/eventNameTextInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textCapWords"
+                    android:textAppearance="@style/Fokus.TextAppearance.Title.Medium">
+
+                    <requestFocus/>
+
+                </com.google.android.material.textfield.TextInputEditText>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="@dimen/icon_dimen"
+                    android:layout_height="@dimen/icon_dimen"
+                    android:layout_margin="@dimen/container_padding_regular"
+                    app:srcCompat="@drawable/ic_outline_calendar_month_24"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:animateLayoutChanges="true">
+
+                    <TextView
+                        android:id="@+id/scheduleTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/editor_item_height"
+                        android:background="?attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center_vertical"
+                        android:text="@string/field_schedule"
+                        android:textAppearance="@style/Fokus.TextAppearance.Label.Large" />
+
+                    <RadioGroup
+                        android:id="@+id/dateTimeRadioGroup"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone">
+
+                        <com.isaiahvonrundstedt.fokus.components.views.TwoLineRadioButton
+                            android:id="@+id/inNextMeetingRadio"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:titleText="@string/field_due_in_the_next_meeting"
+                            app:titleTextAppearance="@style/Fokus.TextAppearance.Label.Large" />
+
+                        <com.isaiahvonrundstedt.fokus.components.views.TwoLineRadioButton
+                            android:id="@+id/pickDateTimeRadio"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:titleText="@string/field_due_pick_from_schedule"
+                            app:titleTextAppearance="@style/Fokus.TextAppearance.Label.Large"/>
+
+                        <com.isaiahvonrundstedt.fokus.components.views.TwoLineRadioButton
+                            android:id="@+id/customDateTimeRadio"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:titleText="@string/field_due_custom"
+                            app:titleTextAppearance="@style/Fokus.TextAppearance.Label.Large"/>
+
+                    </RadioGroup>
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="@dimen/icon_dimen"
+                    android:layout_height="@dimen/icon_dimen"
+                    android:layout_margin="@dimen/container_padding_regular"
+                    app:srcCompat="@drawable/ic_outline_location_on_24"/>
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/locationTextInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="@dimen/container_padding_regular"
+                    android:hint="@string/hint_event_location"
+                    android:inputType="textCapWords"
+                    android:textAppearance="@style/Fokus.TextAppearance.Label.Large"
+                    android:background="@android:color/transparent"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="@dimen/icon_dimen"
+                    android:layout_height="@dimen/icon_dimen"
+                    android:layout_margin="@dimen/container_padding_regular"
+                    app:srcCompat="@drawable/ic_outline_science_24"/>
+
+                <TextView
+                    android:id="@+id/subjectTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:text="@string/field_subject"
+                    android:textAppearance="@style/Fokus.TextAppearance.Label.Large"
+                    android:drawablePadding="16dp"
+                    android:background="?attr/selectableItemBackground"/>
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/removeButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/activity_padding"
+                    android:text="@string/button_remove"
+                    android:visibility="invisible"
+                    tools:visibility="visible"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/container_padding_regular"
+                    android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="@dimen/icon_dimen"
+                        android:layout_height="@dimen/icon_dimen"
+                        android:layout_margin="@dimen/container_padding_regular"
+                        app:srcCompat="@drawable/ic_outline_priority_high_24"/>
+
+                    <com.isaiahvonrundstedt.fokus.components.views.ReactiveTextColorSwitch
+                        android:id="@+id/prioritySwitch"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="@string/button_mark_as_important"
+                        android:textColor="@color/color_secondary_text"
+                        android:textAppearance="@style/Fokus.TextAppearance.Label.Large" />
+
+                </LinearLayout>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/priorityCard"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/container_padding_regular"
+                    android:layout_marginBottom="@dimen/container_padding_regular"
+                    android:visibility="gone"
+                    style="@style/Widget.Material3.CardView.Filled">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/container_padding_small"
+                        android:text="@string/helper_this_is_important"
+                        android:textColor="?attr/colorOnSurfaceVariant"
+                        android:drawableStart="@drawable/ic_outline_info_24"
+                        android:drawablePadding="@dimen/container_padding_regular"/>
+
+                </com.google.android.material.card.MaterialCardView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="@dimen/icon_dimen"
+                    android:layout_height="@dimen/icon_dimen"
+                    android:layout_margin="@dimen/container_padding_regular"
+                    app:srcCompat="@drawable/ic_outline_notes_24"/>
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/notesTextInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="@dimen/editor_container_padding"
+                    android:hint="@string/hint_task_notes"
+                    android:inputType="textMultiLine"
+                    android:lines="4"
+                    android:maxLines="6"
+                    android:minLines="2"
+                    android:scrollbars="vertical"
+                    android:textAppearance="@style/Fokus.TextAppearance.Label.Large"
+                    android:background="@android:color/transparent"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/actionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/activity_padding"
+        android:layout_gravity="bottom|end"
+        android:text="@string/button_save"
+        app:icon="@drawable/ic_outline_save_24"/>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
+

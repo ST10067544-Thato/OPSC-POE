@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_main"
+    app:startDestination="@id/navigation_root">
+
+    <fragment
+        android:id="@+id/navigation_root"
+        android:name="com.isaiahvonrundstedt.fokus.features.core.fragment.RootFragment"
+        tools:layout="@layout/fragment_root"/>
+    <fragment
+        android:id="@+id/navigation_backup"
+        android:name="com.isaiahvonrundstedt.fokus.features.settings.BackupFragment"
+        tools:layout="@layout/fragment_root"/>
+    <fragment
+        android:id="@+id/navigation_notices"
+        android:name="com.isaiahvonrundstedt.fokus.features.about.NoticesFragment"
+        tools:layout="@layout/fragment_notices"/>
+    <fragment
+        android:id="@+id/navigation_libraries"
+        android:name="com.isaiahvonrundstedt.fokus.features.about.LibrariesFragment"
+        tools:layout="@layout/fragment_libraries"/>
+
+    <!-- EditorUI -->
+    <fragment
+        android:id="@+id/navigation_editor_task"
+        android:name="com.isaiahvonrundstedt.fokus.features.task.editor.TaskEditorFragment"
+        tools:layout="@layout/fragment_editor_task"/>
+    <fragment
+        android:id="@+id/navigation_editor_event"
+        android:name="com.isaiahvonrundstedt.fokus.features.event.editor.EventEditorFragment"
+        tools:layout="@layout/fragment_editor_event"/>
+    <fragment
+        android:id="@+id/navigation_editor_subject"
+        android:name="com.isaiahvonrundstedt.fokus.features.subject.editor.SubjectEditorFragment"
+        tools:layout="@layout/fragment_editor_subject"/>
+    <!-- Archived -->
+
+    <fragment
+        android:id="@+id/navigation_archived_event"
+        android:name="com.isaiahvonrundstedt.fokus.features.event.archived.ArchivedEventFragment"
+        android:label="@string/activity_archives"
+        tools:layout="@layout/fragment_archived_event"/>
+    <fragment
+        android:id="@+id/navigation_archived_subject"
+        android:name="com.isaiahvonrundstedt.fokus.features.subject.archived.ArchivedSubjectFragment"
+        android:label="@string/activity_archives"
+        tools:layout="@layout/fragment_archived_subject"/>
+    <fragment
+        android:id="@+id/navigation_archived_task"
+        android:name="com.isaiahvonrundstedt.fokus.features.task.archived.ArchivedTaskFragment"
+        android:label="@string/activity_archives"
+        tools:layout="@layout/fragment_archived_task"/>
+
+</navigation>

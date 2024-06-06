@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="theme_primary">#FF4500</color>
+    <color name="theme_on_primary">#ffffff</color>
+    <color name="theme_primary_container">#ffb599</color>
+    <color name="theme_on_primary_container">#000000</color>
+    <color name="theme_secondary">#ff581a</color>
+    <color name="theme_on_secondary">#ffffff</color>
+    <color name="theme_secondary_container">#ffc7b3</color>
+    <color name="theme_on_secondary_container">#992900</color>
+    <color name="theme_tertiary">#ff581a</color>
+    <color name="theme_on_tertiary">#ffffff</color>
+    <color name="theme_tertiary_container">#ffece6</color>
+    <color name="theme_on_tertiary_container">#cc3700</color>
+    <color name="theme_error">#ba1a1a</color>
+    <color name="theme_on_error">#ffffff</color>
+    <color name="theme_error_container">#ffdad6</color>
+    <color name="theme_on_error_container">#410002</color>
+    <color name="theme_background">#ffffff</color>
+    <color name="theme_on_background">#191c1e</color>
+    <color name="theme_surface">#ffffff</color>
+    <color name="theme_on_surface">#191c1e</color>
+    <color name="theme_surface_variant">#ffffff</color>
+    <color name="theme_on_surface_variant">#41474d</color>
+    <color name="theme_outline">#71787e</color>
+    <color name="theme_inverse_on_surface">#ffffff</color>
+    <color name="theme_inverse_surface">#2e3133</color>
+    <color name="theme_inverse_primary">#ffc7b3</color>
+    <color name="theme_shadow">#000000</color>
+    <color name="theme_surface_tint">#FF4500</color>
+    <color name="theme_surface_tint_color">#FF4500</color>
+
+    <color name="color_primary_text">@color/theme_on_surface</color>
+    <color name="color_secondary_text">#808080</color>
+
+    <color name="color_chip_background_transparent">#992900</color>
+
+    <color name="color_fokus_blue_50">#ffa280</color>
+    <color name="color_fokus_blue_100">#ff7d4d</color>
+    <color name="color_fokus_blue_500">#ff4500</color>
+    <color name="color_fokus_blue_700">#e63e00</color>
+    <color name="color_fokus_blue_900">#cc3700</color>
+</resources>
