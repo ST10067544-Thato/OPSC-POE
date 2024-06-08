@@ -1,7 +1,9 @@
 package com.isaiahvonrundstedt.fokus.features.event
 
 import androidx.lifecycle.*
-import com.isaiahvonrundstedt.fokus.database.repository.EventRepository
+import com.isaiahvonrundstedt.fokus.database.repository.TaskRepository
+import com.isaiahvonrundstedt.fokus.features.task.Task
+import com.isaiahvonrundstedt.fokus.features.task.TaskPackage
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.NonCancellable
@@ -12,14 +14,14 @@ import javax.inject.Inject
 
 @HiltViewModel
 class EventViewModel @Inject constructor(
-    private val repository: EventRepository
+    private val repository: TaskRepository
 ) : ViewModel() {
 
-    private val _events: LiveData<List<EventPackage>> = repository.fetchLiveData()
+    private val _tasks: LiveData<List<TaskPackage>> = repository.fetchLiveData()
 
     val dates: MediatorLiveData<List<LocalDate>> = MediatorLiveData()
-    val events: MediatorLiveData<List<EventPackage>> = MediatorLiveData()
-    val eventsEmpty: LiveData<Boolean> = Transformations.map(events) { it.isNullOrEmpty() }
+    val tasks: MediatorLiveData<List<TaskPackage>> = MediatorLiveData()
+    val tasksEmpty: LiveData<Boolean> = Transformations.map(tasks) { it.isNullOrEmpty() }
 
     val today: LocalDate
         get() = LocalDate.now()
@@ -29,32 +31,31 @@ class EventViewModel @Inject constructor(
     var selectedDate: LocalDate = today
         set(value) {
             field = value
-            events.value =
-                _events.value?.filter { it.event.schedule!!.toLocalDate() == selectedDate }
+            tasks.value =
+                _tasks.value?.filter { it.task.dueDate!!.toLocalDate() == selectedDate }
         }
 
     var startMonth: YearMonth = currentMonth.minusMonths(1)
     var endMonth: YearMonth = currentMonth.plusMonths(1)
 
     init {
-        events.addSource(_events) { items ->
-            events.value = items.filter { it.event.schedule!!.toLocalDate() == selectedDate }
+        tasks.addSource(_tasks) { items ->
+            tasks.value = items.filter { it.task.dueDate!!.toLocalDate() == selectedDate }
         }
-        dates.addSource(_events) { items ->
-            dates.value = items.map { it.event.schedule!!.toLocalDate() }.distinct()
+        dates.addSource(_tasks) { items ->
+            dates.value = items.map { it.task.dueDate!!.toLocalDate() }.distinct()
         }
     }
 
-    fun insert(event: Event) = viewModelScope.launch(Dispatchers.IO + NonCancellable) {
-        repository.insert(event)
+    fun insert(task: Task) = viewModelScope.launch(Dispatchers.IO + NonCancellable) {
+        repository.insert(task)
     }
 
-    fun remove(event: Event) = viewModelScope.launch(Dispatchers.IO + NonCancellable) {
-        repository.remove(event)
+    fun remove(task: Task) = viewModelScope.launch(Dispatchers.IO + NonCancellable) {
+        repository.remove(task)
     }
 
-    fun update(event: Event) = viewModelScope.launch(Dispatchers.IO + NonCancellable) {
-        repository.update(event)
+    fun update(task: Task) = viewModelScope.launch(Dispatchers.IO + NonCancellable) {
+        repository.update(task)
     }
-
 }

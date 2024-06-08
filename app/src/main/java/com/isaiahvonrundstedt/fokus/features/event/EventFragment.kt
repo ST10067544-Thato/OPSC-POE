@@ -25,10 +25,14 @@ import com.isaiahvonrundstedt.fokus.components.extensions.android.isDark
 import com.isaiahvonrundstedt.fokus.components.extensions.android.setTextColorFromResource
 import com.isaiahvonrundstedt.fokus.databinding.FragmentEventBinding
 import com.isaiahvonrundstedt.fokus.databinding.LayoutCalendarDayBinding
-import com.isaiahvonrundstedt.fokus.features.event.editor.EventEditorFragment
+import com.isaiahvonrundstedt.fokus.features.task.TaskAdapter
+import com.isaiahvonrundstedt.fokus.features.task.TaskPackage
+import com.isaiahvonrundstedt.fokus.features.task.TaskViewModel
+import com.isaiahvonrundstedt.fokus.features.task.editor.TaskEditorFragment
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseAdapter
 import com.isaiahvonrundstedt.fokus.features.shared.abstracts.BaseFragment
 import com.isaiahvonrundstedt.fokus.features.subject.Subject
+import com.isaiahvonrundstedt.fokus.features.task.Task
 import com.kizitonwose.calendarview.model.CalendarDay
 import com.kizitonwose.calendarview.model.CalendarMonth
 import com.kizitonwose.calendarview.model.DayOwner
@@ -44,14 +48,14 @@ import java.time.temporal.WeekFields
 import java.util.*
 
 @AndroidEntryPoint
-class EventFragment : BaseFragment(), BaseAdapter.ActionListener, BaseAdapter.ArchiveListener {
+class EventFragment : BaseFragment(), BaseAdapter.ActionListener, TaskAdapter.TaskStatusListener, BaseAdapter.ArchiveListener {
 
     private var daysOfWeek: Array<DayOfWeek> = emptyArray()
     private var _binding: FragmentEventBinding? = null
     private var controller: NavController? = null
 
     private val binding get() = _binding!!
-    private val eventAdapter = EventAdapter(this, this)
+    private val taskAdapter = TaskAdapter(this, this,this)
     private val monthYearFormatter = DateTimeFormatter.ofPattern("MMMM yyyy")
     private val dateFormatter = DateTimeFormatter.ofPattern("d MMMM yyyy")
     private val viewModel: EventViewModel by viewModels()
@@ -82,9 +86,9 @@ class EventFragment : BaseFragment(), BaseAdapter.ActionListener, BaseAdapter.Ar
         with(binding.recyclerView) {
             addItemDecoration(ItemDecoration(context))
             layoutManager = LinearLayoutManager(context)
-            adapter = eventAdapter
+            adapter = taskAdapter
 
-            ItemTouchHelper(ItemSwipeCallback(context, eventAdapter))
+            ItemTouchHelper(ItemSwipeCallback(context, taskAdapter))
                 .attachToRecyclerView(this)
         }
 
@@ -107,11 +111,6 @@ class EventFragment : BaseFragment(), BaseAdapter.ActionListener, BaseAdapter.Ar
     override fun onStart() {
         super.onStart()
 
-        /**
-         * Get the NavController here so
-         * that it doesn't crash when
-         * the host activity is recreated.
-         */
         controller = Navigation.findNavController(requireActivity(), R.id.navigationHostFragment)
 
         class DayViewContainer(view: View) : ViewContainer(view) {
@@ -128,10 +127,10 @@ class EventFragment : BaseFragment(), BaseAdapter.ActionListener, BaseAdapter.Ar
             }
         }
 
-        viewModel.events.observe(viewLifecycleOwner) {
-            eventAdapter.submitList(it)
+        viewModel.tasks.observe(viewLifecycleOwner) {
+            taskAdapter.submitList(it)
         }
-        viewModel.eventsEmpty.observe(viewLifecycleOwner) {
+        viewModel.tasksEmpty.observe(viewLifecycleOwner) {
             binding.emptyView.isVisible = it
         }
 
@@ -167,25 +166,16 @@ class EventFragment : BaseFragment(), BaseAdapter.ActionListener, BaseAdapter.Ar
             setCurrentDate(it.yearMonth.atDay(1))
             binding.appBarLayout.toolbar.title = it.yearMonth.format(monthYearFormatter)
 
-            // Check if the user is nearing the end of the month list.
-            // Then continually add more months so that the user
-            // can scroll infinitely.
             if (it.yearMonth.minusMonths(2) == viewModel.startMonth) {
-                // The user is two months away from the starting month in the CalendarView
-                // we'll need to add more months at the start
                 viewModel.startMonth = viewModel.startMonth.minusMonths(2)
                 binding.calendarView.updateMonthRange(startMonth = viewModel.startMonth)
 
             } else if (it.yearMonth.plusMonths(2) == viewModel.endMonth) {
-                // The user is two months away from the ending month in the CalendarView
-                // we'll need to add more months at the end
                 viewModel.endMonth = viewModel.endMonth.plusMonths(2)
                 binding.calendarView.updateMonthRange(endMonth = viewModel.endMonth)
             }
         }
 
-        // Observe dates with events then rebind the
-        // dayBinder to the Calendar.
         viewModel.dates.observe(viewLifecycleOwner) { dates ->
             binding.calendarView.dayBinder = object : DayBinder<DayViewContainer> {
                 override fun create(view: View): DayViewContainer {
@@ -211,16 +201,16 @@ class EventFragment : BaseFragment(), BaseAdapter.ActionListener, BaseAdapter.Ar
             it.transitionName = TRANSITION_ELEMENT_ROOT
 
             controller?.navigate(
-                R.id.navigation_editor_event, null, null,
+                R.id.navigation_editor_task, null, null,
                 FragmentNavigatorExtras(it to TRANSITION_ELEMENT_ROOT)
             )
         }
     }
 
     override fun <T> onItemArchive(t: T) {
-        if (t is EventPackage) {
-            t.event.isEventArchived = true
-            viewModel.update(t.event)
+        if (t is TaskPackage) {
+            t.task.isTaskArchived = true
+            viewModel.update(t.task)
         }
     }
 
@@ -228,28 +218,26 @@ class EventFragment : BaseFragment(), BaseAdapter.ActionListener, BaseAdapter.Ar
         t: T, action: BaseAdapter.ActionListener.Action,
         container: View?
     ) {
-        if (t is EventPackage) {
+        if (t is TaskPackage) {
             when (action) {
-                // Show up the editorUI and pass the extra
                 BaseAdapter.ActionListener.Action.SELECT -> {
-                    val transitionName = TRANSITION_ELEMENT_ROOT + t.event.eventID
+                    val transitionName = TRANSITION_ELEMENT_ROOT + t.task.taskID
 
                     val args = bundleOf(
-                        EventEditorFragment.EXTRA_EVENT to Event.toBundle(t.event),
-                        EventEditorFragment.EXTRA_SUBJECT to t.subject?.let { Subject.toBundle(it) }
+                        TaskEditorFragment.EXTRA_TASK to Task.toBundle(t.task),
+                        TaskEditorFragment.EXTRA_SUBJECT to t.subject?.let { Subject.toBundle(it) }
                     )
 
                     controller?.navigate(
-                        R.id.navigation_editor_event, args, null,
+                        R.id.navigation_editor_task, args, null,
                         FragmentNavigatorExtras(container!! to transitionName)
                     )
                 }
-                // Item has been swiped, notify database for deletion
                 BaseAdapter.ActionListener.Action.DELETE -> {
-                    viewModel.remove(t.event)
+                    viewModel.remove(t.task)
 
-                    createSnackbar(R.string.feedback_event_removed, binding.recyclerView).run {
-                        setAction(R.string.button_undo) { viewModel.insert(t.event) }
+                    createSnackbar(R.string.feedback_task_removed, binding.recyclerView).run {
+                        setAction(R.string.button_undo) { viewModel.insert(t.task) }
                     }
                 }
             }
@@ -259,7 +247,7 @@ class EventFragment : BaseFragment(), BaseAdapter.ActionListener, BaseAdapter.Ar
     private fun onMenuItemClicked(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_archived -> {
-                controller?.navigate(R.id.navigation_archived_event)
+                controller?.navigate(R.id.navigation_archived_task)
             }
         }
         return true
@@ -269,13 +257,12 @@ class EventFragment : BaseFragment(), BaseAdapter.ActionListener, BaseAdapter.Ar
         day: CalendarDay, textView: TextView, view: View,
         dates: List<LocalDate> = emptyList()
     ) {
-
         textView.text = day.date.dayOfMonth.toString()
         if (day.owner == DayOwner.THIS_MONTH) {
             when (day.date) {
                 viewModel.today -> {
                     val color = if (requireContext().isDark()) android.R.color.system_accent1_50
-                        else android.R.color.system_accent1_500
+                    else android.R.color.system_accent1_500
                     textView.setTextColorFromResource(color)
                     textView.setBackgroundResource(R.drawable.shape_calendar_current_day)
                     view.isVisible = false
@@ -311,8 +298,6 @@ class EventFragment : BaseFragment(), BaseAdapter.ActionListener, BaseAdapter.Ar
     private fun daysOfWeekFromLocale(): Array<DayOfWeek> {
         val firstDayOfWeek = WeekFields.of(Locale.getDefault()).firstDayOfWeek
         var daysOfWeek = DayOfWeek.values()
-        // Order `daysOfWeek` array so that firstDayOfWeek is at index 0.
-        // Only necessary if firstDayOfWeek != DayOfWeek.MONDAY which has ordinal 0.
         if (firstDayOfWeek != DayOfWeek.MONDAY) {
             val rhs = daysOfWeek.sliceArray(firstDayOfWeek.ordinal..daysOfWeek.indices.last)
             val lhs = daysOfWeek.sliceArray(0 until firstDayOfWeek.ordinal)
@@ -324,5 +309,9 @@ class EventFragment : BaseFragment(), BaseAdapter.ActionListener, BaseAdapter.Ar
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+    }
+
+    override fun onStatusChanged(taskPackage: TaskPackage, isFinished: Boolean) {
+        TODO("Not yet implemented")
     }
 }
