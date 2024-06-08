@@ -122,7 +122,7 @@
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent">
 
-                        <com.isaiahvonrundstedt.fokus.components.views.RadioButtonCompat
+                        <!--<com.isaiahvonrundstedt.fokus.components.views.RadioButtonCompat
                             android:id="@+id/noDueRadioButton"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -148,7 +148,7 @@
                             android:paddingStart="@dimen/editor_container_padding"
                             android:paddingEnd="@dimen/editor_container_padding"
                             app:titleText="@string/field_due_pick_from_schedule"
-                            app:titleTextAppearance="@style/Fokus.TextAppearance.Label.Large"/>
+                            app:titleTextAppearance="@style/Fokus.TextAppearance.Label.Large"/>-->
 
                         <com.isaiahvonrundstedt.fokus.components.views.TwoLineRadioButton
                             android:id="@+id/customDateTimeRadio"

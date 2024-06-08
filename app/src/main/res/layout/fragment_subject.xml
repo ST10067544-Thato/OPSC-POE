@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:gravity="center"
-            android:text="@string/empty_view_no_subjects_title"
+            android:text="No Added Categories"
             android:textColor="?attr/colorPrimary"
             android:textAppearance="@style/Fokus.TextAppearance.Headline.Small"/>
 
@@ -39,7 +39,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="@string/empty_view_no_subjects_summary"
+            android:text="Categories help sort your tasks. Add one using the button below."
             android:textAppearance="@style/Fokus.TextAppearance.Body.Medium"/>
 
     </LinearLayout>

@@ -230,22 +230,22 @@ class TaskFragment : BaseFragment(), BaseAdapter.ActionListener, TaskAdapter.Tas
 
     private fun onMenuItemClicked(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.action_name_sort_ascending -> {
-                viewModel.sort = TaskViewModel.Sort.NAME
-                viewModel.sortDirection = SortDirection.ASCENDING
-            }
-            R.id.action_name_sort_descending -> {
-                viewModel.sort = TaskViewModel.Sort.NAME
-                viewModel.sortDirection = SortDirection.DESCENDING
-            }
-            R.id.action_due_sort_ascending -> {
-                viewModel.sort = TaskViewModel.Sort.DUE
-                viewModel.sortDirection = SortDirection.ASCENDING
-            }
-            R.id.action_due_sort_descending -> {
-                viewModel.sort = TaskViewModel.Sort.DUE
-                viewModel.sortDirection = SortDirection.DESCENDING
-            }
+//            R.id.action_name_sort_ascending -> {
+//                viewModel.sort = TaskViewModel.Sort.NAME
+//                viewModel.sortDirection = SortDirection.ASCENDING
+//            }
+//            R.id.action_name_sort_descending -> {
+//                viewModel.sort = TaskViewModel.Sort.NAME
+//                viewModel.sortDirection = SortDirection.DESCENDING
+//            }
+//            R.id.action_due_sort_ascending -> {
+//                viewModel.sort = TaskViewModel.Sort.DUE
+//                viewModel.sortDirection = SortDirection.ASCENDING
+//            }
+//            R.id.action_due_sort_descending -> {
+//                viewModel.sort = TaskViewModel.Sort.DUE
+//                viewModel.sortDirection = SortDirection.DESCENDING
+//            }
             R.id.action_filter_all -> {
                 viewModel.filterOption = TaskViewModel.Constraint.ALL
                 binding.appBarLayout.toolbar.setTitle(getToolbarTitle())

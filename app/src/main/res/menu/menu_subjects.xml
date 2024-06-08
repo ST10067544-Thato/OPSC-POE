@@ -41,7 +41,7 @@
             </item>
             <item
                 android:id="@+id/action_sort_schedule"
-                android:title="@string/field_schedule"
+                android:title="@string/field_category"
                 android:icon="@drawable/ic_outline_event_24">
                 <menu>
                     <item

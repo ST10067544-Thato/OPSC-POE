@@ -11,17 +11,17 @@
         <item
             android:id="@+id/navigation_events"
             android:title="Calendar"
-            android:icon="@drawable/ic_outline_event_24"/>
-        <!--Menu navigation for the Reports page-->
-        <item
-            android:id="@+id/navigation_reports"
-            android:title="Reports"
-            android:icon="@drawable/ic_outline_reports_24"/>
+            android:icon="@drawable/ic_outline_calendar_month_24"/>
         <!--Menu navigation for the Categories page-->
         <item
             android:id="@+id/navigation_subjects"
             android:title="Categories"
             android:icon="@drawable/ic_outline_science_24"/>
+        <!--Menu navigation for the Reports page-->
+        <item
+            android:id="@+id/navigation_reports"
+            android:title="Goals"
+            android:icon="@drawable/ic_outline_reports_24"/>
 
     </group>
 
@@ -32,18 +32,25 @@
             android:title="Leaderboard"
             android:icon="@drawable/ic_outline_leaderboard_24"/>
 
+        <!--<item
+            android:id="@+id/navigation_logs"
+            android:title="Logout"
+            android:icon="@drawable/ic_outline_logout_24"/>-->
+        <item
+            android:id="@+id/navigation_settings"
+            android:title="@string/navigation_settings"
+            android:icon="@drawable/ic_outline_settings_24"/>
+        <!--<item
+            android:id="@+id/navigation_about"
+            android:title="@string/navigation_about"
+            android:icon="@drawable/ic_outline_info_24"/>-->
+    </group>
+
+    <group android:id="@+id/groupActivities2" android:checkableBehavior="none">
         <item
             android:id="@+id/navigation_logs"
             android:title="Logout"
             android:icon="@drawable/ic_outline_logout_24"/>
-        <!--<item
-            android:id="@+id/navigation_settings"
-            android:title="@string/navigation_settings"
-            android:icon="@drawable/ic_outline_settings_24"/>
-        <item
-            android:id="@+id/navigation_about"
-            android:title="@string/navigation_about"
-            android:icon="@drawable/ic_outline_info_24"/>-->
     </group>
 
 </menu>

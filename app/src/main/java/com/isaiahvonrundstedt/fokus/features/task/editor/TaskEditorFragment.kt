@@ -179,7 +179,7 @@ class TaskEditorFragment : BaseEditorFragment(), FragmentResultListener {
         }
 
         with(binding.appBarLayout.toolbar) {
-            inflateMenu(R.menu.menu_editor)
+            //inflateMenu(R.menu.menu_editor)
             setNavigationOnClickListener {
                 if (controller?.graph?.id == R.id.navigation_container_task)
                     requireActivity().finish()
@@ -297,7 +297,7 @@ class TaskEditorFragment : BaseEditorFragment(), FragmentResultListener {
                 }
             } else {
                 with(binding.subjectTextView) {
-                    setText(R.string.field_subject)
+                    setText(R.string.field_category)
                     setTextColorFromResource(R.color.color_secondary_text)
                     removeCompoundDrawableAtStart()
                 }
@@ -420,31 +420,31 @@ class TaskEditorFragment : BaseEditorFragment(), FragmentResultListener {
             binding.priorityCard.isVisible = isChecked
         }
 
-        binding.noDueRadioButton.setOnClickListener {
-            viewModel.setDueDate(null)
-            binding.dueDateTextView.setText(R.string.field_not_set)
-            (it as RadioButtonCompat).setTextColor(
-                ContextCompat.getColor(
-                    it.context,
-                    R.color.color_primary_text
-                )
-            )
-        }
-
-        binding.inNextMeetingRadio.setOnClickListener {
-            viewModel.setNextMeetingForDueDate()
-            with(binding.inNextMeetingRadio) {
-                titleTextColor = ContextCompat.getColor(context, R.color.color_primary_text)
-                subtitle = viewModel.getTask()?.formatDueDate(context)
-            }
-        }
-
-        binding.pickDateTimeRadio.setOnClickListener {
-            hideKeyboardFromCurrentFocus(requireView())
-
-            SchedulePickerSheet
-                .show(viewModel.schedules, childFragmentManager)
-        }
+//        binding.noDueRadioButton.setOnClickListener {
+//            viewModel.setDueDate(null)
+//            binding.dueDateTextView.setText(R.string.field_not_set)
+//            (it as RadioButtonCompat).setTextColor(
+//                ContextCompat.getColor(
+//                    it.context,
+//                    R.color.color_primary_text
+//                )
+//            )
+//        }
+//
+//        binding.inNextMeetingRadio.setOnClickListener {
+//            viewModel.setNextMeetingForDueDate()
+//            with(binding.inNextMeetingRadio) {
+//                titleTextColor = ContextCompat.getColor(context, R.color.color_primary_text)
+//                subtitle = viewModel.getTask()?.formatDueDate(context)
+//            }
+//        }
+//
+//        binding.pickDateTimeRadio.setOnClickListener {
+//            hideKeyboardFromCurrentFocus(requireView())
+//
+//            SchedulePickerSheet
+//                .show(viewModel.schedules, childFragmentManager)
+//        }
 
         binding.customDateTimeRadio.setOnClickListener {
             MaterialDialog(requireContext()).show {
@@ -684,13 +684,7 @@ class TaskEditorFragment : BaseEditorFragment(), FragmentResultListener {
                 result.getParcelable<Schedule>(SchedulePickerSheet.EXTRA_SCHEDULE)?.also {
                     viewModel.setClassScheduleAsDueDate(it)
 
-                    with(binding.pickDateTimeRadio) {
-                        titleTextColor = ContextCompat.getColor(
-                            context,
-                            R.color.color_primary_text
-                        )
-                        subtitle = viewModel.getTask()?.formatDueDate(context)
-                    }
+
                 }
             }
             AttachmentOptionSheet.REQUEST_KEY -> {

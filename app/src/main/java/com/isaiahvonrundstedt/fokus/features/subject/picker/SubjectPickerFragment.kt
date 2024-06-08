@@ -79,7 +79,7 @@ class SubjectPickerFragment(fragmentManager: FragmentManager): BasePickerFragmen
                 BaseAdapter.ActionListener.Action.DELETE -> {
                     viewModel.remove(t.subject)
 
-                    createSnackbar(R.string.feedback_subject_removed).run {
+                    createSnackbar(R.string.feedback_category_deleted).run {
                         setAction(R.string.button_undo) {
                             viewModel.insert(t.subject, t.schedules)
                         }

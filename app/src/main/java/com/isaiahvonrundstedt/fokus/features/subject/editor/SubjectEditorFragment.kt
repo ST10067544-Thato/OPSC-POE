@@ -147,7 +147,7 @@ class SubjectEditorFragment : BaseEditorFragment(),  FragmentResultListener {
         if (requestKey == REQUEST_KEY_UPDATE) {
             binding.codeTextInput.setText(viewModel.getCode())
             binding.descriptionTextInput.setText(viewModel.getDescription())
-            binding.instructorTextInput.setText(viewModel.getInstructor())
+            //binding.instructorTextInput.setText(viewModel.getInstructor())
         }
 
         viewModel.subject.observe(this) {
@@ -155,7 +155,7 @@ class SubjectEditorFragment : BaseEditorFragment(),  FragmentResultListener {
                 with(it) {
                     binding.codeTextInput.setText(code)
                     binding.descriptionTextInput.setText(description)
-                    binding.instructorTextInput.setText(instructor)
+                   // binding.instructorTextInput.setText(instructor)
                     binding.tagView.setCompoundDrawableAtStart(binding.tagView.getCompoundDrawableAtStart()
                         ?.let { drawable -> tintDrawable(drawable) })
                     binding.tagView.setText(tag.getNameResource())
@@ -165,31 +165,31 @@ class SubjectEditorFragment : BaseEditorFragment(),  FragmentResultListener {
             }
         }
 
-        viewModel.schedules.observe(this) {
-            binding.schedulesChipGroup.removeAllViews()
-            it.forEach { schedule ->
-                binding.schedulesChipGroup.addView(Chip(requireContext()).apply {
-                    text = schedule.formatDaysOfWeek(requireContext(), true)
-                    tag = schedule.scheduleID
-                    isCloseIconVisible = true
-                    setCloseIconResource(R.drawable.ic_outline_close_24)
-                    setOnClickListener {
-                        ScheduleEditor(childFragmentManager).show {
-                            arguments = bundleOf(
-                                ScheduleEditor.EXTRA_SUBJECT_ID to viewModel.getID(),
-                                ScheduleEditor.EXTRA_SCHEDULE to schedule
-                            )
-                        }
-                    }
-                    setOnCloseIconClickListener {
-                        viewModel.removeSchedule(schedule)
-                        createSnackbar(R.string.feedback_schedule_removed, binding.root).run {
-                            setAction(R.string.button_undo) { viewModel.addSchedule(schedule) }
-                        }
-                    }
-                })
-            }
-        }
+//        viewModel.schedules.observe(this) {
+//            binding.schedulesChipGroup.removeAllViews()
+//            it.forEach { schedule ->
+//                binding.schedulesChipGroup.addView(Chip(requireContext()).apply {
+//                    text = schedule.formatDaysOfWeek(requireContext(), true)
+//                    tag = schedule.scheduleID
+//                    isCloseIconVisible = true
+//                    setCloseIconResource(R.drawable.ic_outline_close_24)
+//                    setOnClickListener {
+//                        ScheduleEditor(childFragmentManager).show {
+//                            arguments = bundleOf(
+//                                ScheduleEditor.EXTRA_SUBJECT_ID to viewModel.getID(),
+//                                ScheduleEditor.EXTRA_SCHEDULE to schedule
+//                            )
+//                        }
+//                    }
+//                    setOnCloseIconClickListener {
+//                        viewModel.removeSchedule(schedule)
+//                        createSnackbar(R.string.feedback_schedule_removed, binding.root).run {
+//                            setAction(R.string.button_undo) { viewModel.addSchedule(schedule) }
+//                        }
+//                    }
+//                })
+//            }
+//        }
 
         viewModel.isCodeExists.observe(this) {
             binding.codeTextInputLayout.error =
@@ -213,21 +213,21 @@ class SubjectEditorFragment : BaseEditorFragment(),  FragmentResultListener {
             }
         }
 
-        binding.instructorTextInput.setOnFocusChangeListener { v, hasFocus ->
-            if (!hasFocus && v is TextInputEditText) {
-                viewModel.setInstructor(v.text.toString())
-            }
-        }
+//        binding.instructorTextInput.setOnFocusChangeListener { v, hasFocus ->
+//            if (!hasFocus && v is TextInputEditText) {
+//                viewModel.setInstructor(v.text.toString())
+//            }
+//        }
 
-        binding.addActionChip.setOnClickListener {
-            hideKeyboardFromCurrentFocus(requireView())
-
-            ScheduleEditor(childFragmentManager).show {
-                arguments = bundleOf(
-                    ScheduleEditor.EXTRA_SUBJECT_ID to viewModel.getID()
-                )
-            }
-        }
+//        binding.addActionChip.setOnClickListener {
+//            hideKeyboardFromCurrentFocus(requireView())
+//
+//            ScheduleEditor(childFragmentManager).show {
+//                arguments = bundleOf(
+//                    ScheduleEditor.EXTRA_SUBJECT_ID to viewModel.getID()
+//                )
+//            }
+//        }
 
         binding.tagView.setOnClickListener {
             MaterialDialog(requireContext()).show {
@@ -251,24 +251,24 @@ class SubjectEditorFragment : BaseEditorFragment(),  FragmentResultListener {
         binding.actionButton.setOnClickListener {
             viewModel.setCode(binding.codeTextInput.text.toString())
             viewModel.setDescription(binding.descriptionTextInput.text.toString())
-            viewModel.setInstructor(binding.instructorTextInput.text.toString())
+            //viewModel.setInstructor(binding.instructorTextInput.text.toString())
 
             if (viewModel.getCode()?.isEmpty() == true) {
-                createSnackbar(R.string.feedback_subject_empty_name, binding.root)
+                createSnackbar(R.string.feedback_category_empty_name, binding.root)
                 binding.codeTextInput.requestFocus()
                 return@setOnClickListener
             }
 
-            if (viewModel.getDescription()?.isEmpty() == true) {
-                createSnackbar(R.string.feedback_subject_empty_description, binding.root)
-                binding.descriptionTextInput.requestFocus()
-                return@setOnClickListener
-            }
-
-            if (viewModel.getSchedules().size < 1) {
-                createSnackbar(R.string.feedback_subject_no_schedule, binding.root).show()
-                return@setOnClickListener
-            }
+//            if (viewModel.getDescription()?.isEmpty() == true) {
+//                createSnackbar(R.string.feedback_subject_empty_description, binding.root)
+//                binding.descriptionTextInput.requestFocus()
+//                return@setOnClickListener
+//            }
+//
+//            if (viewModel.getSchedules().size < 1) {
+//                createSnackbar(R.string.feedback_subject_no_schedule, binding.root).show()
+//                return@setOnClickListener
+//            }
 
 
             if (requestKey == REQUEST_KEY_INSERT)
@@ -431,7 +431,6 @@ class SubjectEditorFragment : BaseEditorFragment(),  FragmentResultListener {
             REQUEST_KEY_INSERT -> {
                 if (binding.codeTextInput.text.isNullOrEmpty() ||
                     binding.descriptionTextInput.text.isNullOrEmpty()
-                    || binding.schedulesChipGroup.children.none()
                 ) {
                     MaterialDialog(requireContext()).show {
                         title(R.string.feedback_unable_to_share_title)

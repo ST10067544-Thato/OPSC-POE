@@ -70,7 +70,7 @@
                         android:clickable="true"
                         android:focusable="true"
                         android:gravity="center_vertical"
-                        android:text="@string/field_schedule"
+                        android:text="@string/field_category"
                         android:textAppearance="@style/Fokus.TextAppearance.Label.Large" />
 
                     <RadioGroup

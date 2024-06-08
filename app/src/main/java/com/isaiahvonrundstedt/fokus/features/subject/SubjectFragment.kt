@@ -64,7 +64,7 @@ class SubjectFragment : BaseFragment(), BaseAdapter.ActionListener, SubjectAdapt
         with(binding.appBarLayout.toolbar) {
             setTitle(getToolbarTitle())
             menu?.clear()
-            inflateMenu(R.menu.menu_subjects)
+            //inflateMenu(R.menu.menu_subjects)
             overrideOverflowMenu(::customPopupProvider)
             setOnMenuItemClickListener(::onMenuItemClicked)
             setupNavigation(this)
@@ -161,7 +161,7 @@ class SubjectFragment : BaseFragment(), BaseAdapter.ActionListener, SubjectAdapt
                 BaseAdapter.ActionListener.Action.DELETE -> {
                     viewModel.remove(t.subject)
 
-                    createSnackbar(R.string.feedback_subject_removed, binding.recyclerView).run {
+                    createSnackbar(R.string.feedback_category_deleted, binding.recyclerView).run {
                         setAction(R.string.button_undo) { viewModel.insert(t.subject, t.schedules) }
                     }
                 }

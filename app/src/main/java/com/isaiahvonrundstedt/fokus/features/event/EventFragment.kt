@@ -70,14 +70,13 @@ class EventFragment : BaseFragment(), BaseAdapter.ActionListener, TaskAdapter.Ta
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.actionButton.transitionName = TRANSITION_ELEMENT_ROOT
-        setInsets(binding.root, binding.appBarLayout.toolbar, arrayOf(binding.containerLayout),
-            binding.actionButton)
+        //binding.actionButton.transitionName = TRANSITION_ELEMENT_ROOT
+        setInsets(binding.root, binding.appBarLayout.toolbar, arrayOf(binding.containerLayout))
 
         with(binding.appBarLayout.toolbar) {
             title = viewModel.currentMonth.format(monthYearFormatter)
             menu?.clear()
-            inflateMenu(R.menu.menu_events)
+            //inflateMenu(R.menu.menu_events)
             overrideOverflowMenu(::customPopupProvider)
             setOnMenuItemClickListener(::onMenuItemClicked)
             setupNavigation(this)
@@ -197,14 +196,14 @@ class EventFragment : BaseFragment(), BaseAdapter.ActionListener, TaskAdapter.Ta
         binding.calendarView.scrollToDate(viewModel.today)
         setCurrentDate(viewModel.today)
 
-        binding.actionButton.setOnClickListener {
-            it.transitionName = TRANSITION_ELEMENT_ROOT
-
-            controller?.navigate(
-                R.id.navigation_editor_task, null, null,
-                FragmentNavigatorExtras(it to TRANSITION_ELEMENT_ROOT)
-            )
-        }
+//        binding.actionButton.setOnClickListener {
+//            it.transitionName = TRANSITION_ELEMENT_ROOT
+//
+//            controller?.navigate(
+//                R.id.navigation_editor_task, null, null,
+//                FragmentNavigatorExtras(it to TRANSITION_ELEMENT_ROOT)
+//            )
+//        }
     }
 
     override fun <T> onItemArchive(t: T) {
