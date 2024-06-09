@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1061300032181",
+    "project_id": "clockwork-f7430",
+    "storage_bucket": "clockwork-f7430.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1061300032181:android:bef6c7c31ccc3225bf24fc",
+        "android_client_info": {
+          "package_name": "com.isaiahvonrundstedt.fokus"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB15Pw9bm328djh0ri7zOWImN9B0A3jSc4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

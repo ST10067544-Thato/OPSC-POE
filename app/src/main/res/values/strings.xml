@@ -1,5 +1,5 @@
 <resources>
-    <string translatable="false" name="app_name">Fokus</string>
+    <string translatable="false" name="app_name">ClockWork</string>
 
     <string name="shortcut_add_task">@string/button_add_task</string>
     <string name="shortcut_add_event">@string/button_add_event</string>

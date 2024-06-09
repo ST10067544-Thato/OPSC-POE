@@ -52,17 +52,17 @@ class RootFragment: BaseFragment() {
          */
         controller = (childFragmentManager.findFragmentById(R.id.fragmentContainerView)
                 as? NavHostFragment)?.navController
-        if (binding.navigationView.headerCount > 0) {
-            _headerBinding = LayoutNavigationHeaderBinding
-                .bind(binding.navigationView.getHeaderView(0))
-            headerBinding.menuTitleView.text = when (LocalTime.now().hour) {
-                in 0..6 -> getString(R.string.greeting_default)
-                in 7..12 -> getString(R.string.greeting_morning)
-                in 13..18 -> getString(R.string.greeting_afternoon)
-                in 19..23 -> getString(R.string.greeting_evening)
-                else -> getString(R.string.greeting_default)
-            }
-        }
+//        if (binding.navigationView.headerCount > 0) {
+//            _headerBinding = LayoutNavigationHeaderBinding
+//                .bind(binding.navigationView.getHeaderView(0))
+//            headerBinding.menuTitleView.text = when (LocalTime.now().hour) {
+//                in 0..6 -> getString(R.string.greeting_default)
+//                in 7..12 -> getString(R.string.greeting_morning)
+//                in 13..18 -> getString(R.string.greeting_afternoon)
+//                in 19..23 -> getString(R.string.greeting_evening)
+//                else -> getString(R.string.greeting_default)
+//            }
+//        }
 
         postponeEnterTransition()
         view.doOnPreDraw { startPostponedEnterTransition() }
